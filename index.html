@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Grippy</title>
+    <link href="./index.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+<div style="display: flex;">
+
+    <div class="container">
+        <h3>Input</h3>
+
+        <input id="boxWidth" placeholder="Box width" type="number" value="200">
+        <input id="boxHeight" placeholder="Box height" type="number" value="300">
+        <input id="boxAmount" placeholder="Amount of boxes" type="number" value="3">
+        <input id="boxWeight" placeholder="Box weight" type="number" value="1">
+        <button id="submit">Submit</button>
+    </div>
+
+    <div class="container" style="margin-left: 12px">
+        <h3>Output</h3>
+        <p id="spacingX">Spacing X: </p>
+        <p id="spacingY">Spacing Y: </p>
+        <p id="suctionX">Suction cups X: </p>
+        <p id="suctionY">Suction cups Y: </p>
+
+    </div>
+
+
+</div>
+
+<script type="module">
+
+    import {Generator} from "./src/generator/generator";
+    //createScene();
+    const generator = new Generator();
+    const submitKnapp = document.getElementById("submit");
+    submitKnapp.onclick = function () {
+
+        const width = parseInt(document.getElementById("boxWidth").value);
+        const height = parseInt(document.getElementById("boxHeight").value);
+        const amount = parseInt(document.getElementById("boxAmount").value);
+        const weight = parseInt(document.getElementById("boxWeight").value);
+
+        console.log(width, height, amount);
+        generator.createHelperBox(width, height);
+        if (generator.checkBoxDimensions(amount, width, height)) {
+            generator.run(width, height, amount, weight);
+        }else {
+            feedback_invalidBoxDimensions();
+        }
+
+    }
+
+    function feedback_invalidBoxDimensions() {
+        alert("Ugyldig boksdimensjon. Boksen må enten vere større i breidden, eller høgden.");
+    }
+
+</script>
+</body>
+</html>
